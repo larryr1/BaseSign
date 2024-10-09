@@ -31,7 +31,7 @@ if localVersionHandle then
   localVersion = localVersionHandle.readAll()
   localVersionHandle.close()
 else
-  local localVersion = "-1"
+  localVersion = "-1"
 end
 
 writeLine("Local version: " .. localVersion, colors.yellow)
