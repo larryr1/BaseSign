@@ -85,6 +85,17 @@ local function handleRednetCommand()
   end
 end
 
+local function waitForReboot()
+  -- Wait for the "timer" event to reboot
+  local timerId = os.startTimer(1800) -- Start a timer with a 5-second delay
+  while true do
+    local event, id = os.pullEvent("timer")
+    if id == timerId then
+      os.reboot()
+    end
+  end
+end
+
 local function greeting()
   term.clear()
   term.setCursorPos(1, 1)
@@ -165,4 +176,4 @@ mf.writeOn(mon, MONITOR_TEXT, nil, nil, {
 });
 
 -- Run rednet handler in parallel
-parallel.waitForAny(handleRednetCommand, greeting)
+parallel.waitForAny(handleRednetCommand, waitForReboot, greeting)
