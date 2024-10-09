@@ -22,6 +22,31 @@ local function writeLine(txt, color)
   end
 end
 
+-- Check requirements
+writeLine("Checking application requirements...", colors.yellow)
+local peripherals = peripheral.getNames()
+local mon = peripheral.find("monitor")
+local wmod = nil
+for _, p in ipairs(peripherals) do
+  if peripheral.getType(p) == "modem" then
+    local mod = peripheral.wrap(p)
+    if mod.isWireless() then
+      wmod = p
+      break
+    end
+  end
+end
+
+if mon == nil then
+  writeLine("No monitor found. Attach a monitor.", colors.red)
+  return
+end
+
+if wmod == nil then
+  writeLine("No wireless modem found. Attach a wireless modem.", colors.red)
+  return
+end
+
 -- Check for Updates
 writeLine("Checking for updates...", colors.yellow)
 local remoteVersion = http.get("https://raw.githubusercontent.com/larryr1/BaseSign/main/version").readAll()
