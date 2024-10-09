@@ -4,7 +4,6 @@ local function writeLine(txt)
   term.setCursorPos(1, y+1)
 end
 
-shell.run("wget run https://raw.githubusercontent.com/michielp1807/more-fonts/refs/heads/main/installer.lua")
 shell.run("wget https://raw.githubusercontent.com/larryr1/BaseSign/refs/heads/main/application/entry.lua BaseSignEntry.lua")
 shell.run("mkdir basesign_application")
 shell.run("mv BaseSignEntry.lua /basesign_application/entry.lua")
