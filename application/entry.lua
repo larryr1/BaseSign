@@ -55,8 +55,8 @@ if localVersion ~= remoteVersion then
   end
 
   -- Replace startup file with remote version
-  fs.delete("startup.lua")
   if (fs.exists("/basesign_application/startup.lua")) then
+    fs.delete("/startup.lua")
     fs.move("/basesign_application/startup.lua", "startup.lua")
   end
 
