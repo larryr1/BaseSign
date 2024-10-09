@@ -46,12 +46,20 @@ local function handleRednetCommand()
   while true do
     local senderId, message, protocol = rednet.receive("basesign_rm")
     if message.type == "reboot" then
+      local reply = {}
+      reply.type = "operation_result"
+      reply.success = true
+      reply.request_id = message.request_id
+      os.sleep(0.1)
+      rednet.send(senderId, reply, "basesign_rm")
       os.reboot()
     end
 
     if message.type == "id" and message.operation == "get" then
       local reply = {}
       reply.type = "id"
+      reply.success = true
+      reply.request_id = message.request_id
       reply.data = getIdString()
       os.sleep(0.1)
       rednet.send(senderId, reply, "basesign_rm")
@@ -62,23 +70,30 @@ local function handleRednetCommand()
       local reply = {}
       reply.type = "operation_result"
       reply.success = true
+      reply.request_id = message.request_id
       os.sleep(0.1)
       rednet.send(senderId, reply, "basesign_rm")
     end
 
     if message.type == "config_file" and message.operation == "get" then
+      peripheral.find("speaker").playSound("minecraft:entity.experience_orb.pickup", 1, 1)
       os.sleep(0.1)
       local reply = {}
       reply.type = "config_file"
-      reply.data = fs.open("bs_config.lua", "r").readAll()
+      reply.success = true
+      reply.request_id = message.request_id
+      reply.data = fs.open("/bs_config.lua", "r").readAll()
       rednet.send(senderId, reply, "basesign_rm")
+      peripheral.find("speaker").playSound("minecraft:entity.experience_orb.pickup", 1, 2)
+      print(textutils.serialise(reply))
     end
 
     if message.type == "config_file" and message.operation == "set" then
-      fs.open("bs_config.lua", "w").write(message.data)
+      fs.open("/bs_config.lua", "w").write(message.data)
       local reply = {}
       reply.type = "operation_result"
       reply.success = true
+      reply.request_id = message.request_id
       os.sleep(0.1)
       rednet.send(senderId, reply, "basesign_rm")
     end
