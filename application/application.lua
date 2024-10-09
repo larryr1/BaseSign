@@ -1,10 +1,27 @@
 -- BaseSign system
 -- Author: larryr1
-peripheral.find("speaker").playNote("pling")
-local function writeLine(txt)
+
+local function write(txt, color)
+  local tx, ty = term.getSize()
+  local oldColor = term.getTextColor()
+  if color then
+    term.setTextColor(color)
+  end
   term.write(txt)
+  term.setTextColor(oldColor)
+end
+
+local function writeLine(txt, color)
+  write(txt, color)
+  local tx, ty = term.getSize()
   local x, y = term.getCursorPos()
-  term.setCursorPos(1, y+1)
+
+  if (y + 1 > ty) then
+    term.scroll(1)
+    term.setCursorPos(1, ty)
+  else
+    term.setCursorPos(1, y + 1)
+  end
 end
 
 local function getIdString()
@@ -24,8 +41,6 @@ local function cleanupRednet()
   rednet.unhost("basesign_rm")
   rednet.close()
 end
-
-setupRednet()
 
 local function handleRednetCommand()
   while true do
@@ -49,7 +64,6 @@ local function handleRednetCommand()
       reply.success = true
       os.sleep(0.1)
       rednet.send(senderId, reply, "basesign_rm")
-      peripheral.find("speaker").playNote("pling")
     end
 
     if message.type == "config_file" and message.operation == "get" then
@@ -67,7 +81,6 @@ local function handleRednetCommand()
       reply.success = true
       os.sleep(0.1)
       rednet.send(senderId, reply, "basesign_rm")
-      peripheral.find("speaker").playNote("pling")
     end
   end
 end
@@ -107,6 +120,7 @@ local function greeting()
   os.sleep(0.5)
 end
 
+setupRednet()
 
 if not fs.exists("/bs_config.lua") then
   local file = fs.open("/bs_config.lua", "w")
