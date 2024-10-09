@@ -6,14 +6,15 @@ end
 
 term.clear()
 term.setCursorPos(1, 1)
-writeLine("BaseSign Installer v2.0")
-os.sleep(2)
+writeLine("Welcome to BaseSign Installer v2.0")
+os.sleep(0.5)
 writeLine("Creating directories and downloading files...")
-
+os.sleep(0.5)
 shell.run("wget https://raw.githubusercontent.com/larryr1/BaseSign/refs/heads/main/application/entry.lua BaseSignEntry.lua")
 shell.run("mkdir basesign_application")
 shell.run("mv BaseSignEntry.lua /basesign_application/entry.lua")
-
+os.sleep(0.5)
+writeLine("Creating startup.lua...")
 if not fs.exists("/startup.lua") then
   local file = fs.open("/startup.lua", "w")
   file.write([[
@@ -25,7 +26,7 @@ else
   writeLine("You should add the following line to it:")
   writeLine('shell.run("/basesign_application/entry.lua")')
 end
-
+os.sleep(3)
 term.clear()
 term.setCursorPos(1, 1)
 writeLine("Set a computer name for changing settings.")
