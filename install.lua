@@ -4,6 +4,12 @@ local function writeLine(txt)
   term.setCursorPos(1, y+1)
 end
 
+term.clear()
+term.setCursorPos(1, 1)
+writeLine("BaseSign Installer v2.0")
+os.sleep(2)
+writeLine("Creating directories and downloading files...")
+
 shell.run("wget https://raw.githubusercontent.com/larryr1/BaseSign/refs/heads/main/application/entry.lua BaseSignEntry.lua")
 shell.run("mkdir basesign_application")
 shell.run("mv BaseSignEntry.lua /basesign_application/entry.lua")
