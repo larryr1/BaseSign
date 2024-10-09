@@ -127,7 +127,7 @@ end
 
 require(".bs_config")
 local mon = peripheral.find("monitor")
-local mf = require("/morefonts")
+local mf = require("morefonts")
 
 mon.setTextScale(1)
 mon.clear()
