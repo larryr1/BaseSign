@@ -9,6 +9,18 @@ shell.run("wget https://raw.githubusercontent.com/larryr1/BaseSign/refs/heads/ma
 shell.run("mkdir basesign_application")
 shell.run("mv BaseSignEntry.lua /basesign_application/entry.lua")
 
+if not fs.exists("/startup.lua") then
+  local file = fs.open("/bs_config.lua", "w")
+  file.write([[
+shell.run("/basesign_application/entry.lua")
+  ]])
+  file.close()
+else
+  writeLine("A startup.lua already exists.")
+  writeLine("You should add the following line to it:")
+  writeLine('shell.run("/basesign_application/entry.lua")')
+end
+
 term.clear()
 term.setCursorPos(1, 1)
 writeLine("Set a computer name for changing settings.")
