@@ -76,7 +76,6 @@ local function handleRednetCommand()
     end
 
     if message.type == "config_file" and message.operation == "get" then
-      peripheral.find("speaker").playSound("minecraft:entity.experience_orb.pickup", 1, 1)
       os.sleep(0.1)
       local reply = {}
       reply.type = "config_file"
@@ -84,7 +83,6 @@ local function handleRednetCommand()
       reply.request_id = message.request_id
       reply.data = fs.open("/bs_config.lua", "r").readAll()
       rednet.send(senderId, reply, "basesign_rm")
-      peripheral.find("speaker").playSound("minecraft:entity.experience_orb.pickup", 1, 2)
       print(textutils.serialise(reply))
     end
 
