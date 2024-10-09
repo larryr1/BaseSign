@@ -10,7 +10,7 @@ shell.run("mkdir basesign_application")
 shell.run("mv BaseSignEntry.lua /basesign_application/entry.lua")
 
 if not fs.exists("/startup.lua") then
-  local file = fs.open("/bs_config.lua", "w")
+  local file = fs.open("/startup.lua", "w")
   file.write([[
 shell.run("/basesign_application/entry.lua")
   ]])
