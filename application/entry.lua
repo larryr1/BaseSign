@@ -73,4 +73,4 @@ else
 end
 
 -- Load BaseSign
-os.run({}, "/basesign_application/application.lua")
+shell.run("/basesign_application/application.lua")
